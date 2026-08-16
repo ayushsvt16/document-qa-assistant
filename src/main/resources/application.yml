@@ -1,0 +1,68 @@
+spring:
+  application:
+    name: document-qa-assistant
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/document_qa}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 25MB
+
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY:}
+      chat:
+        model: ${AI_CHAT_MODEL:gpt-4o-mini}
+        temperature: 0.3
+      embedding:
+        model: ${AI_EMBEDDING_MODEL:text-embedding-3-small}
+
+# Application-specific configuration
+app:
+  chunking:
+    max-tokens: ${CHUNK_MAX_TOKENS:800}
+    overlap-tokens: ${CHUNK_OVERLAP_TOKENS:100}
+  retrieval:
+    top-k: ${RETRIEVAL_TOP_K:5}
+    similarity-threshold: ${SIMILARITY_THRESHOLD:0.70}
+  conversation:
+    max-history-turns: ${MAX_HISTORY_TURNS:6}
+    history-token-budget: ${HISTORY_TOKEN_BUDGET:2000}
+  ingestion:
+    pool-size: ${INGESTION_POOL_SIZE:5}
+    embedding-batch-size: ${EMBEDDING_BATCH_SIZE:20}
+  resilience:
+    timeout-seconds: ${AI_TIMEOUT_SECONDS:30}
+    max-retries: ${AI_MAX_RETRIES:3}
+    retry-delay-ms: ${AI_RETRY_DELAY_MS:1000}
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+# Logging — structured, no secrets
+logging:
+  pattern:
+    console: "%d{ISO8601} [%thread] [%X{correlationId}] %-5level %logger{36} - %msg%n"
+  level:
+    com.ayush.documentqa: INFO
+    org.springframework.ai: WARN

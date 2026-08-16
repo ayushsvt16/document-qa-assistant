@@ -1,0 +1,30 @@
+spring:
+  ai:
+    openai:
+      api-key: test-key-not-real
+      chat:
+        model: gpt-4o-mini
+      embedding:
+        model: text-embedding-3-small
+
+app:
+  chunking:
+    max-tokens: 200
+    overlap-tokens: 50
+  retrieval:
+    top-k: 5
+    similarity-threshold: 0.70
+  conversation:
+    max-history-turns: 6
+    history-token-budget: 2000
+  ingestion:
+    pool-size: 2
+    embedding-batch-size: 10
+  resilience:
+    timeout-seconds: 10
+    max-retries: 2
+    retry-delay-ms: 500
+
+logging:
+  level:
+    com.ayush.documentqa: DEBUG
