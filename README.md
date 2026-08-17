@@ -131,7 +131,7 @@ Deduplication: `UNIQUE(tenant_id, content_hash)` prevents re-uploading identical
 - **Vector search**: pgvector cosine similarity with HNSW index (`m=16, ef_construction=64`)
 - **Top-K**: 5 chunks per query (configurable via `RETRIEVAL_TOP_K`)
 - **Filtering**: Tenant + category filtering happens **inside the SQL query** (not in Java post-query)
-- **Similarity threshold**: 0.70 default (configurable via `SIMILARITY_THRESHOLD`)
+- **Similarity threshold**: 0.30 default (configurable via `SIMILARITY_THRESHOLD`)
 
 ### Chunking
 - **Strategy**: Token-aware splitting with configurable overlap (800 tokens / 100 overlap default)
@@ -175,7 +175,7 @@ When no retrieved chunks meet the similarity threshold:
 | `AI_CHAT_MODEL` | `llama3.2` | Chat model |
 | `AI_EMBEDDING_MODEL` | `mxbai-embed-large` | Embedding model |
 | `RETRIEVAL_TOP_K` | `5` | Max chunks retrieved |
-| `SIMILARITY_THRESHOLD` | `0.70` | Min cosine similarity |
+| `SIMILARITY_THRESHOLD` | `0.30` | Min cosine similarity |
 | `CHUNK_MAX_TOKENS` | `800` | Max tokens per chunk |
 | `CHUNK_OVERLAP_TOKENS` | `100` | Overlap between chunks |
 | `MAX_HISTORY_TURNS` | `6` | Max conversation turns in context |
