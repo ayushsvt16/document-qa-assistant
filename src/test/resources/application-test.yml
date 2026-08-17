@@ -1,0 +1,11 @@
+# Test profile — overrides main application.yml for integration tests
+spring:
+  ai:
+    openai:
+      api-key: "test-key-not-real"
+      chat:
+        model: gpt-4o-mini
+      embedding:
+        model: text-embedding-3-small
+
+# Flyway & datasource are injected by BaseIntegrationTest via @DynamicPropertySource
