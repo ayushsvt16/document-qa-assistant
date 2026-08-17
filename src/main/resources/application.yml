@@ -49,6 +49,26 @@ app:
     max-retries: ${AI_MAX_RETRIES:3}
     retry-delay-ms: ${AI_RETRY_DELAY_MS:1000}
 
+resilience4j:
+  retry:
+    instances:
+      aiService:
+        max-attempts: ${AI_MAX_RETRIES:3}
+        wait-duration: ${AI_RETRY_DELAY_MS:1000}ms
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        retry-exceptions:
+          - org.springframework.web.client.RestClientException
+          - com.ayush.documentqa.exception.ModelProviderException
+  circuitbreaker:
+    instances:
+      aiService:
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+
 # Actuator
 management:
   endpoints:

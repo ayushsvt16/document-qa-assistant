@@ -1,7 +1,7 @@
-package com.ayush.documentqa.ai;
-
 import com.ayush.documentqa.exception.ModelProviderException;
 import com.ayush.documentqa.observability.MetricsService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import io.micrometer.core.instrument.Timer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,7 @@ import reactor.core.publisher.Flux;
  * Provider-agnostic — the actual model (OpenAI, Anthropic, etc.) is determined
  * by Spring AI auto-configuration based on which starter is on the classpath.
  *
- * Resilience (retry, circuit breaker) is applied via Resilience4j annotations
+ * Resilience (retry with exponential backoff, circuit breaker) is applied via Resilience4j annotations
  * on this service's public methods.
  */
 @Service
@@ -32,7 +32,10 @@ public class AiService {
 
     /**
      * Blocking LLM call for synchronous chat endpoint.
+     * Protected by Resilience4j retry and circuit breaker.
      */
+    @Retry(name = "aiService")
+    @CircuitBreaker(name = "aiService")
     public String call(String systemPrompt, String userMessage) {
         Timer.Sample sample = metricsService.startTimer();
         try {
