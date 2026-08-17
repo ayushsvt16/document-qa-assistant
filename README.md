@@ -38,7 +38,7 @@ Upload documents (PDF, DOCX, TXT, Markdown) → the system extracts, chunks, and
 
 ### Prerequisites
 - Docker Desktop (with Docker Compose)
-- An OpenAI API key (or compatible provider)
+- Ollama running locally with the required models (`ollama run llama3.2`, `ollama pull mxbai-embed-large`)
 
 ### Run
 
@@ -47,10 +47,7 @@ Upload documents (PDF, DOCX, TXT, Markdown) → the system extracts, chunks, and
 git clone https://github.com/ayushsvt16/document-qa-assistant.git
 cd document-qa-assistant
 
-# 2. Set your API key
-export OPENAI_API_KEY=sk-your-key-here
-
-# 3. Start everything
+# 2. Start everything
 docker compose up -d
 
 # 4. Wait ~30 seconds for startup, then verify
@@ -102,8 +99,8 @@ All `/api/**` endpoints require the `X-Tenant-Id` header.
 |-----------|-----------|---------|
 | Framework | Spring Boot | 4.0.7 |
 | AI/RAG | Spring AI | 2.0.0 |
-| LLM | OpenAI GPT-4o-mini | (configurable) |
-| Embeddings | text-embedding-3-small | 1536 dimensions |
+| LLM | Local Ollama (Llama 3.2) | (configurable) |
+| Embeddings | mxbai-embed-large | 1024 dimensions |
 | Database | PostgreSQL + pgvector | 16 |
 | Migrations | Flyway | (managed by Boot) |
 | API Docs | springdoc-openapi | 2.9.0 |
@@ -120,7 +117,7 @@ All `/api/**` endpoints require the `X-Tenant-Id` header.
 
 ```
 documents           → Core document metadata (status: PROCESSING → READY → FAILED)
-document_chunks     → Text chunks with pgvector embedding (1536-dim, HNSW index)
+document_chunks     → Text chunks with pgvector embedding (1024-dim, HNSW index)
 conversations       → Chat sessions
 messages            → Conversation history (user + assistant turns)
 message_sources     → Links answers to retrieved chunks (provenance tracking)
@@ -174,9 +171,9 @@ When no retrieved chunks meet the similarity threshold:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `OPENAI_API_KEY` | (required) | OpenAI API key |
-| `AI_CHAT_MODEL` | `gpt-4o-mini` | Chat model |
-| `AI_EMBEDDING_MODEL` | `text-embedding-3-small` | Embedding model |
+| `OLLAMA_BASE_URL` | `http://host.docker.internal:11434` | Ollama daemon URL |
+| `AI_CHAT_MODEL` | `llama3.2` | Chat model |
+| `AI_EMBEDDING_MODEL` | `mxbai-embed-large` | Embedding model |
 | `RETRIEVAL_TOP_K` | `5` | Max chunks retrieved |
 | `SIMILARITY_THRESHOLD` | `0.70` | Min cosine similarity |
 | `CHUNK_MAX_TOKENS` | `800` | Max tokens per chunk |
