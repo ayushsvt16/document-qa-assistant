@@ -22,13 +22,14 @@ spring:
       max-request-size: 25MB
 
   ai:
-    openai:
-      api-key: ${OPENAI_API_KEY:}
+    ollama:
+      base-url: ${OLLAMA_BASE_URL:http://host.docker.internal:11434}
       chat:
-        model: ${AI_CHAT_MODEL:gpt-4o-mini}
-        temperature: 0.3
+        model: ${AI_CHAT_MODEL:llama3.2}
+        options:
+          temperature: 0.3
       embedding:
-        model: ${AI_EMBEDDING_MODEL:text-embedding-3-small}
+        model: ${AI_EMBEDDING_MODEL:mxbai-embed-large}
 
 # Application-specific configuration
 app:
