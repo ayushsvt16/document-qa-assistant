@@ -230,6 +230,8 @@ docker compose down -v
 3. **No file storage** — document content is not stored after ingestion; only chunks + embeddings are persisted. Re-upload is required if the source file is needed again.
 4. **Single-node** — no distributed processing; the bounded thread pool handles ingestion concurrency on a single instance.
 5. **No authentication** — tenant isolation is via header, not JWT/OAuth. Suitable for internal services behind an API gateway.
+6. **Orphaned Model Calls on Disconnect (FR-5):** The SSE streaming endpoint currently stops emitting to the client on disconnect, but does not actively `.dispose()` the upstream Spring AI `Flux` subscription. With more time, I would capture the `Disposable` and explicitly terminate the LLM generation to prevent wasted compute.
+7. **Cost Estimation Metrics (FR-9):** The `MetricsService` tracks token counts (in/out) via Micrometer, but does not yet calculate a dollar cost. With more time, I would add a pricing lookup table based on the active `AI_CHAT_MODEL` to emit an estimated cost metric per request.
 
 ## Project Structure
 
