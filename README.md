@@ -58,7 +58,7 @@ curl http://localhost:8080/actuator/health
 
 ![Demo Screenshot](assets/demo-screenshot.png)
 
-*Video walkthrough: [Link to be uploaded soon]()*
+*Video walkthrough: [Watch on Google Drive](https://drive.google.com/file/d/1AGEXsY1yIisI6K47OOsQ-Wo97kh6OxiY/view?usp=drive_link)*
 
 ```bash
 # Upload a document (returns 202 Accepted — ingestion is async)
