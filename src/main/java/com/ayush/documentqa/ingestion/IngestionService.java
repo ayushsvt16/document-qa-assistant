@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
@@ -40,14 +40,16 @@ public class IngestionService {
     private final DocumentRepository documentRepository;
     private final AppProperties appProperties;
     private final MetricsService metricsService;
+    private final ChunkPersistenceService chunkPersistenceService;
 
     public IngestionService(List<TextExtractor> extractors,
-                            TextChunker textChunker,
-                            EmbeddingModel embeddingModel,
-                            DocumentChunkRepository chunkRepository,
-                            DocumentRepository documentRepository,
-                            AppProperties appProperties,
-                            MetricsService metricsService) {
+                        TextChunker textChunker,
+                        EmbeddingModel embeddingModel,
+                        DocumentChunkRepository chunkRepository,
+                        DocumentRepository documentRepository,
+                        AppProperties appProperties,
+                        MetricsService metricsService,
+                        ChunkPersistenceService chunkPersistenceService) {
         this.extractors = extractors;
         this.textChunker = textChunker;
         this.embeddingModel = embeddingModel;
@@ -55,6 +57,7 @@ public class IngestionService {
         this.documentRepository = documentRepository;
         this.appProperties = appProperties;
         this.metricsService = metricsService;
+        this.chunkPersistenceService = chunkPersistenceService;
     }
 
     /**
@@ -91,7 +94,7 @@ public class IngestionService {
             List<float[]> allEmbeddings = generateEmbeddingsInBatches(chunks);
 
             // 4. Persist chunks + embeddings atomically (INSIDE transaction)
-            persistChunksTransactionally(documentId, tenantId, chunks, allEmbeddings);
+            chunkPersistenceService.persistChunksTransactionally(documentId, tenantId, chunks, allEmbeddings);
 
             // 5. Mark document as READY
             markReady(documentId);
@@ -129,7 +132,7 @@ public class IngestionService {
      * Atomic write of all chunks + embeddings for a document.
      * If any chunk fails to persist, the entire batch is rolled back.
      */
-    @Transactional
+    /*@Transactional
     public void persistChunksTransactionally(UUID documentId, String tenantId,
                                              List<TextChunker.ChunkedText> chunks,
                                              List<float[]> embeddings) {
@@ -149,7 +152,7 @@ public class IngestionService {
                     embeddingStr
             );
         }
-    }
+    }*/
 
     private TextExtractor findExtractor(String contentType, String filename) {
         return extractors.stream()

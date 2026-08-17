@@ -245,7 +245,7 @@ src/main/java/com/ayush/documentqa/
 ├── dto/                 # Request/Response records
 ├── entity/              # JPA entities
 ├── exception/           # Custom exceptions + GlobalExceptionHandler
-├── ingestion/           # TextExtractors, TextChunker, IngestionService
+├── ingestion/           # TextExtractors, TextChunker, IngestionService, ChunkPersistenceService
 ├── observability/       # CorrelationIdFilter, MetricsService
 ├── repository/          # JPA repositories (incl. native pgvector queries)
 ├── retrieval/           # RetrievalService, RetrievedChunk

@@ -93,10 +93,10 @@
         </dependency>
 
         <!-- Spring AI — provider-agnostic via starter swap -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-model-openai</artifactId>
-        </dependency>
+        </dependency>-->
         <!-- LLAMA AI -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
