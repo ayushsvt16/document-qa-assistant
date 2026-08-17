@@ -59,6 +59,10 @@ curl http://localhost:8080/actuator/health
 
 ### 5-Minute Demo
 
+![Demo Screenshot](assets/demo-screenshot.png)
+
+*Video walkthrough: [Link to be uploaded soon]()*
+
 ```bash
 # Upload a document (returns 202 Accepted — ingestion is async)
 curl -X POST http://localhost:8080/api/v1/documents \
