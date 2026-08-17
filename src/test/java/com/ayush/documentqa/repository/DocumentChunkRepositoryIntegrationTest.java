@@ -4,10 +4,11 @@ import com.ayush.documentqa.BaseIntegrationTest;
 import com.ayush.documentqa.entity.Document;
 import com.ayush.documentqa.entity.DocumentStatus;
 import org.junit.jupiter.api.Test;
+import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
-import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,8 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Integration tests for document chunk repository with real pgvector database.
  * Tests vector similarity search, tenant filtering, and category filtering.
  */
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@SpringBootTest
 @ActiveProfiles("test")
 class DocumentChunkRepositoryIntegrationTest extends BaseIntegrationTest {
 
@@ -28,6 +28,9 @@ class DocumentChunkRepositoryIntegrationTest extends BaseIntegrationTest {
 
     @Autowired
     private DocumentChunkRepository chunkRepository;
+
+    @MockitoBean
+    private EmbeddingModel embeddingModel;
 
     @Test
     void flywayMigrationsRun_schemaExists() {

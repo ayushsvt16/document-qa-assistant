@@ -94,13 +94,16 @@ public class TextChunker {
                 chunkIndex++;
             }
 
-            // Advance position with overlap
-            pos = end - overlapChars;
-            if (pos <= (end - maxChunkChars) || pos >= fullText.length()) {
-                pos = end;
+            if (end >= fullText.length()) {
+                break;
             }
-            // Avoid infinite loops
-            if (pos <= 0 && end == 0) break;
+
+            // Ensure pos always strictly advances past current pos
+            int nextPos = end - overlapChars;
+            if (nextPos <= pos) {
+                nextPos = end;
+            }
+            pos = nextPos;
         }
 
         return chunks;
