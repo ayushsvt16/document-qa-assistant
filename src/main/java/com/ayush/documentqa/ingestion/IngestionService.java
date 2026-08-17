@@ -1,7 +1,6 @@
 package com.ayush.documentqa.ingestion;
 
 import com.ayush.documentqa.config.AppProperties;
-import com.ayush.documentqa.entity.Document;
 import com.ayush.documentqa.entity.DocumentStatus;
 import com.ayush.documentqa.observability.MetricsService;
 import com.ayush.documentqa.repository.DocumentChunkRepository;

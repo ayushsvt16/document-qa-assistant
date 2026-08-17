@@ -5,7 +5,6 @@ import com.ayush.documentqa.retrieval.RetrievedChunk;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Constructs the grounded system prompt and user message for the LLM.

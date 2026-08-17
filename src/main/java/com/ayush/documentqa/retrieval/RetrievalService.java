@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;

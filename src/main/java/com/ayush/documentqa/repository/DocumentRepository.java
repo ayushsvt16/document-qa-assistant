@@ -1,7 +1,6 @@
 package com.ayush.documentqa.repository;
 
 import com.ayush.documentqa.entity.Document;
-import com.ayush.documentqa.entity.DocumentStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -53,12 +53,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(com.ayush.documentqa.service.DocumentService.FileTooLargeException.class)
     public ResponseEntity<ErrorResponse> handleFileTooLarge(
             com.ayush.documentqa.service.DocumentService.FileTooLargeException ex, HttpServletRequest request) {
-        return buildResponse(HttpStatus.PAYLOAD_TOO_LARGE, ex.getMessage(), request);
+        return buildResponse(HttpStatus.CONTENT_TOO_LARGE, ex.getMessage(), request);
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<ErrorResponse> handleMaxUploadSize(MaxUploadSizeExceededException ex, HttpServletRequest request) {
-        return buildResponse(HttpStatus.PAYLOAD_TOO_LARGE, "File size exceeds the maximum allowed size of 20MB", request);
+        return buildResponse(HttpStatus.CONTENT_TOO_LARGE, "File size exceeds the maximum allowed size of 20MB", request);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

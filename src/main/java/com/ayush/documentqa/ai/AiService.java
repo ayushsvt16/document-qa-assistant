@@ -1,3 +1,5 @@
+package com.ayush.documentqa.ai;
+
 import com.ayush.documentqa.exception.ModelProviderException;
 import com.ayush.documentqa.observability.MetricsService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;

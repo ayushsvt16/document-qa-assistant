@@ -2,7 +2,6 @@ package com.ayush.documentqa.controller;
 
 import com.ayush.documentqa.dto.ChatRequest;
 import com.ayush.documentqa.dto.ChatResponse;
-import com.ayush.documentqa.dto.SourceReference;
 import com.ayush.documentqa.service.ChatService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @RestController

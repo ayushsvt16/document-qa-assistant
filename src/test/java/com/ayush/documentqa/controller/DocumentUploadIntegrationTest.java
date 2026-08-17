@@ -3,13 +3,11 @@ package com.ayush.documentqa.controller;
 import com.ayush.documentqa.BaseIntegrationTest;
 import com.ayush.documentqa.entity.Document;
 import com.ayush.documentqa.entity.DocumentStatus;
-import com.ayush.documentqa.repository.DocumentChunkRepository;
 import com.ayush.documentqa.repository.DocumentRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -79,7 +77,7 @@ class DocumentUploadIntegrationTest extends BaseIntegrationTest {
         mockMvc.perform(multipart("/api/v1/documents")
                         .file(file)
                         .header("X-Tenant-Id", "test-tenant"))
-                .andExpect(status().isPayloadTooLarge());
+                .andExpect(status().isContentTooLarge());
     }
 
     @Test
