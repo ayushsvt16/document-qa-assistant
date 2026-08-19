@@ -13,7 +13,7 @@ app:
     overlap-tokens: 50
   retrieval:
     top-k: 5
-    similarity-threshold: 0.70
+    similarity-threshold: 0.30
   conversation:
     max-history-turns: 6
     history-token-budget: 2000
